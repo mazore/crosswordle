@@ -1,0 +1,5 @@
+TODO:
+- Pass through click events to tiles
+- Create Word class, loadable from csv
+- Keyboard input that passes to letterPress backspacePress enterPress in Word
+- On screen Keyboard class with it's own coloring methods
