@@ -17,6 +17,7 @@ export default function GameGrid(main) {
                 const x = SQUARE_WIDTH * i;
                 const y = SQUARE_WIDTH * j;
                 const w = SQUARE_WIDTH - 10;
+                console.log(x, y, w);
                 rect(this.ctx, x, y, x + w, y + w, '#ff0000', true)
             }
         }
