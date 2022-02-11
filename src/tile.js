@@ -10,6 +10,7 @@ export default function Tile(gameGrid, gridX, gridY) {
     this.drawWidth = ps.SQUARE_WIDTH - ps.SQUARE_PADDING;
     
     this.draw = (letter) => {
+        console.log(gameGrid)l
         const left = this.midX - this.drawWidth/2;
         const top = this.midY - this.drawWidth/2;
         rect(gameGrid.ctx, left, top, this.drawWidth, this.drawWidth, ps.BLANK_TILE_BG, true);
