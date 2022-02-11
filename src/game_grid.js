@@ -2,6 +2,7 @@ import { rect } from './helpers/drawing.js';
 
 const GAME_GRID_WIDTH = 800;
 const GRID_WIDTH = 8;
+const SQUARE_PADDING = 7; // Only applied to bottom and right
 const SQUARE_WIDTH = GAME_GRID_WIDTH / GRID_WIDTH;
 
 
@@ -16,9 +17,8 @@ export default function GameGrid(main) {
             for (let j = 0; j < 8; j++) {
                 const x = SQUARE_WIDTH * i;
                 const y = SQUARE_WIDTH * j;
-                const w = SQUARE_WIDTH - 10;
-                console.log(x, y, w);
-                rect(this.ctx, x, y, x + w, y + w, '#ff0000', true)
+                const w = SQUARE_WIDTH - SQUARE_PADDING;
+                rect(this.ctx, x, y, w, w, '#ff0000', true)
             }
         }
     };
