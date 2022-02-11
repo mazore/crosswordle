@@ -14,7 +14,10 @@ export default function GameGrid(main) {
 
         for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
-                rect(this.ctx, SQUARE_WIDTH*i, SQUARE_WIDTH*j, SQUARE_WIDTH*(i+1)-10, SQUARE_WIDTH*(j+1)-10, true)
+                const x = SQUARE_WIDTH * i;
+                const y = SQUARE_WIDTH * j;
+                const w = SQUARE_WIDTH - 10;
+                rect(this.ctx, x, y, x + w, y + w, '#ff0000', true)
             }
         }
     };
