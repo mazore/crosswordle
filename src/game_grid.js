@@ -16,7 +16,7 @@ export default function GameGrid(main) {
         for (let i = 0; i < ps.GRID_WIDTH; i++) {
             const row = [];
             for (let j = 0; j < ps.GRID_WIDTH; j++) {
-                row.append(new Tile(this, i, j));
+                row.push(new Tile(this, i, j));
             }
         }
     }
