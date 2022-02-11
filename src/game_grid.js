@@ -1,4 +1,4 @@
-import { line, rect } from './helpers/drawing.js';
+import { rect } from './helpers/drawing.js';
 
 const GAME_GRID_WIDTH = 800;
 const GRID_WIDTH = 8;
