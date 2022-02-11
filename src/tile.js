@@ -15,5 +15,5 @@ export default function Tile(gameGrid, gridX, gridY) {
         rect(gameGrid.ctx, left, top, this.drawWidth, this.drawWidth, ps.BLANK_TILE_BG, true);
         text(gameGrid.ctx, letter, this.midX, this.midY, '#000000', this.drawWidth/2);
     }
-    this.draw("ABCDE"[Maht.floor(Math.random()*5)]);
+    this.draw("ABCDE"[Math.floor(Math.random()*5)]);
 }
