@@ -1,8 +1,8 @@
 import { rect } from './helpers/drawing.js';
 
-const GAME_GRID_WIDTH = 800;
+const GAME_GRID_WIDTH = 400;
 const GRID_WIDTH = 8;
-const SQUARE_PADDING = 7; // Only applied to bottom and right
+const SQUARE_PADDING = 5; // Only applied to bottom and right
 const SQUARE_WIDTH = GAME_GRID_WIDTH / GRID_WIDTH;
 
 
@@ -25,14 +25,12 @@ export default function GameGrid(main) {
 
     this.setCanvasDimensions = (width, height) => {
         // Needs to be more complicated to fix blurriness
-        // this.canvas.width = width * 2;
-        // this.canvas.height = height * 2;
-        // this.canvas.style.width = `${width}px`;
-        // this.canvas.style.height = `${height}px`;
-        // this.ctx.scale(2, 2);
-        // this.ctx.lineCap = 'square';
-        this.canvas.width = width;
-        this.canvas.height = height;
+        this.canvas.width = width * 2;
+        this.canvas.height = height * 2;
+        this.canvas.style.width = `${width}px`;
+        this.canvas.style.height = `${height}px`;
+        this.ctx.scale(2, 2);
+        this.ctx.lineCap = 'square';
     };
 
     this.setup();
