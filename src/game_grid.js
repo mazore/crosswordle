@@ -6,8 +6,7 @@ const SQUARE_WIDTH = GAME_GRID_WIDTH / GRID_WIDTH;
 
 
 export default function GameGrid(main) {
-    const canvas = document.getElementById('game-grid');
-    this.canvas = canvas;
+    this.canvas = document.getElementById('game-grid');
     this.ctx = this.canvas.getContext('2d');
 
     this.setup = () => {
