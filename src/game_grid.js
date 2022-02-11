@@ -10,7 +10,7 @@ export default function GameGrid(main) {
     this.ctx = this.canvas.getContext('2d');
 
     this.setup = () => {
-        this.setCanvasDimensions(800, 800);
+        this.setCanvasDimensions(GAME_GRID_WIDTH, GAME_GRID_WIDTH);
 
         for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
