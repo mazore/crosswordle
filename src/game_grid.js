@@ -8,6 +8,10 @@ export default function GameGrid(main) {
     this.setup = () => {
         this.setCanvasDimensions(ps.GAME_GRID_WIDTH, ps.GAME_GRID_WIDTH);
 
+        this.createTiles();
+    };
+
+    this.createTiles = () => {
         this.tiles = [];
         for (let i = 0; i < ps.GRID_WIDTH; i++) {
             const row = [];
@@ -15,7 +19,7 @@ export default function GameGrid(main) {
                 row.append(new Tile(i, j));
             }
         }
-    };
+    }
 
     this.setCanvasDimensions = (width, height) => {
         // Needs to be more complicated to fix blurriness
