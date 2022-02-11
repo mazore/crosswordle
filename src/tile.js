@@ -1,3 +1,4 @@
+import { rect } from './helpers/drawing.js';
 import ps from './parameters.js';
 
 export default function Tile(gameGrid, gridX, gridY) {

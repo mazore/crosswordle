@@ -1,4 +1,3 @@
-import { rect } from './helpers/drawing.js';
 import Tile from './tile.js';
 import ps from './parameters.js';
 
