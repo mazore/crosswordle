@@ -1,4 +1,4 @@
-export function rect(ctx, x, y, w, h, color, stroke = false, strokeInfo = { width: 1, color: '#000' }) {
+export function rect(ctx, x, y, w, h, color, stroke = false, strokeInfo = { width: 1, color: '#000000' }) {
     ctx.fillStyle = color;
     ctx.fillRect(x, y, w, h);
     if (stroke) {
@@ -17,5 +17,5 @@ export function text(ctx, str, x, y, color = '#ffffff', size = 25, bold = false)
     }
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(str, x, y+2);
+    ctx.fillText(str, x, y + 2);
 }
