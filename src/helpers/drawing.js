@@ -17,6 +17,5 @@ export function text(ctx, str, x, y, color = '#ffffff', size = 25, bold = false)
     }
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    console.log(x, y);
     ctx.fillText(str, x, y+2);
 }
