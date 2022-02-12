@@ -8,10 +8,15 @@ export function rect(ctx, x, y, w, h, color, stroke = false, strokeInfo = { widt
     }
 }
 
-export function text(ctx, str, x, y, color = '#ffffff', size = 25) {
+export function text(ctx, str, x, y, color = '#ffffff', size = 25, bold = false) {
     ctx.fillStyle = color;
-    ctx.font = `${size}px`;
+    if (bold) {
+        ctx.font = `bold ${size}px Arial`;
+    } else {
+        ctx.font = `${size}px Arial`;
+    }
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(str, x, y);
+    console.log(x, y);
+    ctx.fillText(str, x, y+2);
 }
