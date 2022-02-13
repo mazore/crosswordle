@@ -103,7 +103,7 @@ export default function Game() {
     };
     this.deletePressed = () => {
         if (this.selectedWord == null) return;
-        this.selectedWord.selectedTile.letter = '';
+        this.selectedWord.selectedTile.setLetter('');
         this.drawAll();
     };
 

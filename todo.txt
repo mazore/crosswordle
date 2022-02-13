@@ -1,6 +1,4 @@
 TODO:
-- Implement Tile.duplicate
-- Draw selected word on top
 - Double tap shared tile to switch to second word in wordGrid
 - Enter key functionality, that colors (and flips) each tile
 - On screen Keyboard class linked up to keypress enter and backspace methods

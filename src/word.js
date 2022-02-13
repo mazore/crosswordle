@@ -9,8 +9,8 @@ export default function Word(game, wordIndex, tileInfos) {
     this.tiles = [];
     for (let i = 0; i < tileInfos.length; i += 1) {
         const { letter, gridX, gridY } = tileInfos[i];
-        game.wordGrid[gridY][gridX].push(this);
         this.tiles.push(new Tile(this, i, gridX, gridY, letter));
+        game.wordGrid[gridY][gridX].push(this);
     }
 
     this.selectedTile = null; // Is null when this Word isn't selected
@@ -51,7 +51,7 @@ export default function Word(game, wordIndex, tileInfos) {
     };
 
     this.typeLetter = (letter) => {
-        this.selectedTile.letter = letter;
+        this.selectedTile.setLetter(letter);
         if (this.selectedTile.indexInWord === this.wordLength - 1) {
             this.deselect();
         } else { // If isn't last letter, move to next letter
