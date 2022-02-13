@@ -1,9 +1,8 @@
-import GameGrid from './game_grid.js';
+import Game from './game.js';
 
 function Main() {
-    this.gameGrid = new GameGrid(this);
-
-    this.gameGrid.loadGridFile('hoops');
+    this.game = new Game(this);
+    this.game.loadGridFile('hoops');
 }
 
 window.main = new Main();

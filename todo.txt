@@ -1,6 +1,8 @@
 TODO:
-- Figure out shared tiles
+- Keyboard input with new system
+- Selected word is drawn on top (implement Tile.duplicate)
+- Double tap shared tile to switch to second word in wordGrid
 - Enter key functionality, that colors (and flips) each tile
 - On screen Keyboard class linked up to keypress enter and backspace methods
 - Mobile compatibility
-- Methods for GameGrid to color keyboard buttons
+- Methods for Game to color keyboard buttons

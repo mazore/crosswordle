@@ -1,9 +1,9 @@
 function Parameters() {
-    this.GAMEGRID_WIDTH = 500;
+    this.GAME_WIDTH = 500;
     this.GRID_WIDTH = 10;
     this.SQUARE_PADDING = 8;
 
-    this.SQUARE_WIDTH = this.GAMEGRID_WIDTH / this.GRID_WIDTH;
+    this.SQUARE_WIDTH = this.GAME_WIDTH / this.GRID_WIDTH;
 
     this.BLACK = '#2d3436';
     this.BLANK_TILE_BG = '#dfe6e9';

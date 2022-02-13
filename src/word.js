@@ -1,44 +1,50 @@
-import { rect } from './helpers/drawing.js';
+import Tile from './tile.js';
 import ps from './parameters.js';
 
-export default function Word(gameGrid, wordIndex, tiles) {
+export default function Word(game, wordIndex, tileInfos) {
+    this.game = game;
     this.color = ps.WORD_COLORS[wordIndex];
-    this.wordLength = tiles.length;
+    this.wordLength = tileInfos.length;
 
-    this.tilePositions = [];
-    for (let i = 0; i < tiles.length; i += 1) {
-        this.tilePositions.push([tiles[i].gridX, tiles[i].gridY]);
-        tiles[i].words.push(this);
-        tiles[i].indexInWord.push(i);
+    this.tiles = [];
+    for (let i = 0; i < tileInfos.length; i += 1) {
+        const { letter, gridX, gridY } = tileInfos[i];
+        game.wordGrid[gridY][gridX].push(this);
+        this.tiles.push(new Tile(this, gridX, gridY, letter));
     }
 
-    this.selectedTilePosition = null; // Is null when this Word isn't selected
+    this.selectedTile = null; // Is null when this Word isn't selected
+
+    this.isSelected = () => this.selectedTile != null;
 
     this.draw = () => {
-        for (let i = 0; i < this.tilePositions.length; i += 1) {
-            gameGrid.getTile(this.tilePositions[i]).draw();
+        for (let i = 0; i < this.tiles.length; i += 1) {
+            this.tiles[i].draw();
         }
     };
 
-    this.select = (tile) => {
+    this.tileAtPosition = (gridX, gridY) => {
+        for (const tile of this.tiles) {
+            if (tile.gridX === gridX && tile.gridY === gridY) {
+                return tile;
+            }
+        }
+        return null;
+    };
+
+    this.select = (gridX, gridY) => {
+        if (this.isSelected()) {
+            this.selectedTile.selected = false;
+        }
+        const tile = this.tileAtPosition(gridX, gridY);
         tile.selected = true;
-        this.selectedTilePosition = [tile.gridX, tile.gridY];
+        this.selectedTile = tile;
     };
 
     this.deselect = () => {
-        gameGrid.getTile(this.selectedTilePosition).selected = false;
-        this.selectedTilePosition = null;
-    };
-
-    this.moveSelectedTile = () => {
-        const selectedTile = gameGrid.getTile(this.selectedTilePosition);
-        if (selectedTile.indexInWord[0] === this.wordLength - 1) {
-            this.deselect();
-            gameGrid.selectedWord = null;
-            return;
+        if (this.isSelected()) {
+            this.selectedTile.selected = false;
+            this.selectedTile = null;
         }
-        selectedTile.selected = false;
-        this.selectedTilePosition = this.tilePositions[selectedTile.indexInWord[0] + 1];
-        gameGrid.getTile(this.selectedTilePosition).selected = true;
     };
 }
