@@ -8,7 +8,7 @@ export default function GameGrid() {
     this.ctx = this.canvas.getContext('2d');
 
     this.selection = null;
-    this.tiles = [];
+    this.tiles = Array(ps.GRID_WIDTH).fill(null).map(() => Array(ps.GRID_WIDTH));
     this.words = [];
 
     this.setup = () => {
@@ -16,7 +16,7 @@ export default function GameGrid() {
     };
 
     this.setCanvasDimensions = () => {
-        // Complicated to fix bluriness
+        // Complicated to fix blurriness
         this.canvas.width = ps.GAMEGRID_WIDTH * 2;
         this.canvas.height = ps.GAMEGRID_WIDTH * 2;
         this.canvas.style.width = `${ps.GAMEGRID_WIDTH}px`;
@@ -27,24 +27,18 @@ export default function GameGrid() {
         // this.canvas.height = ps.GAMEGRID_WIDTH;
     };
 
-    /* Takes a csv `text` and creates a grid of Tiles */
+    /* Takes a csv `text` and creates a grid of Tiles in `this.tiles` */
     this.loadTilesFromText = (text) => {
-        let gridX = 0;
-        let gridY = 0;
-        for (const row of text.split('\n')) {
-            gridX = 0;
-            const tileRow = [];
-            for (const letter of row.split(',')) {
-                if (letter[0] === '_') {
-                    tileRow.push(null);
+        const letters = text.split('\r\n').map((row) => row.split(','));
+        for (let gridX = 0; gridX < ps.GRID_WIDTH; gridX += 1) {
+            for (let gridY = 0; gridY < ps.GRID_WIDTH; gridY += 1) {
+                const letter = letters[gridY][gridX];
+                if (letter === '_') {
+                    this.tiles[gridY][gridX] = null;
                 } else {
-                    tileRow.push(new Tile(this, gridX, gridY, letter));
+                    this.tiles[gridY][gridX] = new Tile(this, gridX, gridY, letter);
                 }
-                gridX += 1;
             }
-            this.tiles.push(tileRow);
-            gridY += 1;
-            if (gridY === ps.GRID_WIDTH) break;
         }
     };
 

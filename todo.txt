@@ -1,5 +1,4 @@
 TODO:
-- For loops in loadTilesFromText
 - Keyboard input that passes to methods in GameGrid(?) and modifies current Tile
     - Including backspace
 - Move to next tile on keypress
