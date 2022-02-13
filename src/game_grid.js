@@ -108,7 +108,10 @@ export default function GameGrid() {
         const gridX = Math.floor(x / ps.SQUARE_WIDTH);
         const gridY = Math.floor(y / ps.SQUARE_WIDTH);
 
-        this.setSelection(this.tiles[gridY][gridX]);
+        const toSelect = this.tiles[gridY][gridX];
+        if (typeof toSelect !== 'undefined') {
+            this.setSelection(toSelect);
+        }
     };
 
     this.canvas.addEventListener('mousedown', this.mouseDown);
