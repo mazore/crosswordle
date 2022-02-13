@@ -85,10 +85,9 @@ export default function Game() {
 
         if (this.selectedWord != null) {
             this.selectedWord.deselect();
-            this.selectedWord = null;
         }
         const words = this.wordGrid[gridY][gridX];
-        if (words) { // If clicked on a word
+        if (words && words.length > 0) { // If clicked on a word
             [this.selectedWord] = words;
             this.selectedWord.select(gridX, gridY);
         }
@@ -97,24 +96,24 @@ export default function Game() {
     };
     this.canvas.addEventListener('mousedown', this.mouseDown);
 
-    this.keyPress = (letter) => { // `letter` should be uppercase
-        this.getTile(this.selectedWord.selectedTilePosition).letter = letter;
-        this.selectedWord.moveSelectedTile();
+    this.keyPress = (letter) => { // `letter` should always be uppercase
+        if (this.selectedWord == null) return;
+        this.selectedWord.typeLetter(letter);
         this.drawAll();
     };
     this.deletePressed = () => {
-        this.getTile(this.selectedWord.selectedTilePosition).letter = '';
-        this.getTile(this.selectedWord.selectedTilePosition).draw();
+        if (this.selectedWord == null) return;
+        this.selectedWord.selectedTile.letter = '';
+        this.drawAll();
     };
 
-    this.keydown = (event) => { // Raw event letter
+    document.addEventListener('keydown', (event) => {
         if (event.key.match(/^[a-z]$/i)) { // If is letter
             this.keyPress(event.key.toUpperCase());
         } else if (event.key === 'Backspace') {
             this.deletePressed();
         }
-    };
-    document.addEventListener('keydown', this.keydown);
+    });
 
     this.setup();
 }

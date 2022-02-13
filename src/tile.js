@@ -1,7 +1,9 @@
 import { text, rect } from './helpers/drawing.js';
 import ps from './parameters.js';
 
-export default function Tile(word, gridX, gridY, correctLetter) {
+export default function Tile(word, indexInWord, gridX, gridY, correctLetter) {
+    this.word = word;
+    this.indexInWord = indexInWord;
     this.gridX = gridX;
     this.gridY = gridY;
     this.correctLetter = correctLetter;

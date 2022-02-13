@@ -10,7 +10,7 @@ export default function Word(game, wordIndex, tileInfos) {
     for (let i = 0; i < tileInfos.length; i += 1) {
         const { letter, gridX, gridY } = tileInfos[i];
         game.wordGrid[gridY][gridX].push(this);
-        this.tiles.push(new Tile(this, gridX, gridY, letter));
+        this.tiles.push(new Tile(this, i, gridX, gridY, letter));
     }
 
     this.selectedTile = null; // Is null when this Word isn't selected
@@ -32,19 +32,31 @@ export default function Word(game, wordIndex, tileInfos) {
         return null;
     };
 
-    this.select = (gridX, gridY) => {
+    this.setSelectedTile = (tile) => {
         if (this.isSelected()) {
             this.selectedTile.selected = false;
         }
-        const tile = this.tileAtPosition(gridX, gridY);
         tile.selected = true;
         this.selectedTile = tile;
     };
 
+    this.select = (gridX, gridY) => {
+        this.setSelectedTile(this.tileAtPosition(gridX, gridY));
+    };
+
     this.deselect = () => {
-        if (this.isSelected()) {
-            this.selectedTile.selected = false;
-            this.selectedTile = null;
+        this.selectedTile.selected = false;
+        this.selectedTile = null;
+        game.selectedWord = null;
+    };
+
+    this.typeLetter = (letter) => {
+        this.selectedTile.letter = letter;
+        if (this.selectedTile.indexInWord === this.wordLength - 1) {
+            this.deselect();
+        } else { // If isn't last letter, move to next letter
+            const tile = this.tiles[this.selectedTile.indexInWord + 1];
+            this.setSelectedTile(tile);
         }
     };
 }
