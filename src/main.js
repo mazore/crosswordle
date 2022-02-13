@@ -4,7 +4,7 @@ function Main() {
     this.gameGrid = new GameGrid(this);
 
     this.loadGridFile = (filename) => {
-        fetch(`../grids/${filename}.csv`)
+        fetch(`grids/${filename}.csv`)
             .then((response) => response.text())
             .then((text) => {
                 this.gameGrid.loadTilesFromText(text);

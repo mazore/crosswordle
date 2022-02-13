@@ -95,8 +95,10 @@ export default function GameGrid() {
         if (this.selection != null) { // Unselect last
             this.selection.selected = false;
         }
-        tile.selected = true;
-        this.selection = tile;
+        if (tile !== null && typeof tile !== 'undefined') {
+            tile.selected = true;
+            this.selection = tile;
+        }
 
         this.drawAll();
     };
@@ -108,10 +110,7 @@ export default function GameGrid() {
         const gridX = Math.floor(x / ps.SQUARE_WIDTH);
         const gridY = Math.floor(y / ps.SQUARE_WIDTH);
 
-        const toSelect = this.tiles[gridY][gridX];
-        if (typeof toSelect !== 'undefined') {
-            this.setSelection(toSelect);
-        }
+        this.setSelection(this.tiles[gridY][gridX]);
     };
 
     this.canvas.addEventListener('mousedown', this.mouseDown);
