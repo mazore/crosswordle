@@ -7,7 +7,7 @@ export default function GameGrid() {
     this.canvas = document.getElementById('game-grid');
     this.ctx = this.canvas.getContext('2d');
 
-    this.selection = null;
+    this.selectedWord = null;
     this.tiles = Array(ps.GRID_WIDTH).fill(null).map(() => Array(ps.GRID_WIDTH));
     this.words = [];
 
@@ -27,7 +27,22 @@ export default function GameGrid() {
         // this.canvas.height = ps.GAMEGRID_WIDTH;
     };
 
-    /* Takes a csv `text` and creates a grid of Tiles in `this.tiles` */
+    this.getTile = (position) => {
+        const [x, y] = position;
+        return this.tiles[y][x];
+    };
+
+    this.loadGridFile = (filename) => {
+        fetch(`grids/${filename}.csv`)
+            .then((response) => response.text())
+            .then((text) => {
+                this.loadTilesFromText(text);
+                this.loadWordsFromTiles();
+                this.drawAll();
+            });
+    };
+
+    /* Populates this.tiles by parsing a csv string */
     this.loadTilesFromText = (text) => {
         const letters = text.split('\r\n').map((row) => row.split(','));
         for (let gridX = 0; gridX < ps.GRID_WIDTH; gridX += 1) {
@@ -77,24 +92,19 @@ export default function GameGrid() {
     /** Redraws all tiles and background */
     this.drawAll = () => {
         rect(this.ctx, 0, 0, ps.GAMEGRID_WIDTH, ps.GAMEGRID_WIDTH, '#ffffff'); // Background
-        for (const row of this.tiles) {
-            for (const tile of row) {
-                tile?.draw();
-            }
+        for (const word of this.words) {
+            word.draw();
         }
     };
 
-    /** Deselects last tile and selects the new one */
     this.setSelection = (tile) => {
-        if (this.selection != null) { // Unselect last
-            this.selection.selected = false;
-            this.selection.draw();
+        if (this.selectedWord != null) {
+            this.selectedWord.deselect();
         }
-        if (tile !== null && typeof tile !== 'undefined') {
-            tile.selected = true;
-            this.selection = tile;
-            this.selection.draw();
-        }
+        const word = tile.words[0];
+        word.select(tile);
+        this.selectedWord = word;
+        this.drawAll();
     };
 
     this.mouseDown = (event) => {
@@ -104,17 +114,21 @@ export default function GameGrid() {
         const gridX = Math.floor(x / ps.SQUARE_WIDTH);
         const gridY = Math.floor(y / ps.SQUARE_WIDTH);
 
-        this.setSelection(this.tiles[gridY][gridX]);
+        const tile = this.tiles[gridY][gridX];
+        if (tile !== null && typeof tile !== 'undefined') {
+            this.setSelection(tile);
+        }
     };
     this.canvas.addEventListener('mousedown', this.mouseDown);
 
     this.keyPress = (letter) => { // `letter` should be uppercase
-        this.selection.letter = letter;
-        this.selection.draw();
+        this.getTile(this.selectedWord.selectedTilePosition).letter = letter;
+        this.selectedWord.moveSelectedTile();
+        this.drawAll();
     };
     this.deletePressed = () => {
-        this.selection.letter = '';
-        this.selection.draw();
+        this.getTile(this.selectedWord.selectedTilePosition).letter = '';
+        this.getTile(this.selectedWord.selectedTilePosition).draw();
     };
 
     this.keydown = (event) => { // Raw event letter

@@ -5,29 +5,31 @@ export default function Tile(gameGrid, gridX, gridY, correctLetter) {
     this.gridX = gridX;
     this.gridY = gridY;
 
-    this.words = [];
+    this.selected = false;
     this.letter = correctLetter;
     this.correctLetter = correctLetter;
-    this.selected = false;
+
+    this.words = [];
+    this.indexInWord = [];
 
     this.midX = ps.SQUARE_WIDTH * gridX + ps.SQUARE_WIDTH / 2;
     this.midY = ps.SQUARE_WIDTH * gridY + ps.SQUARE_WIDTH / 2;
+    this.width = ps.SQUARE_WIDTH - ps.SQUARE_PADDING;
+    this.left = this.midX - this.width / 2;
+    this.top = this.midY - this.width / 2;
 
     this.draw = () => {
-        const width = ps.SQUARE_WIDTH - ps.SQUARE_PADDING;
-        const left = this.midX - width / 2;
-        const top = this.midY - width / 2;
         let bg = ps.BLANK_TILE_BG;
-        const strokeInfo = { width: 3.5, color: this.words[0].color };
         if (this.selected) {
-            // strokeInfo.width = 5;
             bg = ps.ACTIVE_TILE_BG;
         }
-        rect(gameGrid.ctx, left, top, width, width, bg, true, strokeInfo);
+        const strokeInfo = { width: ps.TILE_STROKE, color: this.words[0].color };
+        if (this.words[0].selectedTilePosition) {
+            strokeInfo.width += 1.5;
+        }
+        rect(gameGrid.ctx, this.left, this.top, this.width, this.width, bg, true, strokeInfo);
 
-        const fontSize = width / 2 + 3;
-        text(gameGrid.ctx, this.letter, this.midX, this.midY, '#2d3436', fontSize, true);
-
-        // rect(gameGrid.ctx, this.midX - 1, this.midY - 1, 2, 2, '#ff0000');
+        const fontSize = this.width / 2 + 3;
+        text(gameGrid.ctx, this.letter, this.midX, this.midY, ps.BLACK, fontSize, true);
     };
 }

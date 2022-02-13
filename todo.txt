@@ -1,6 +1,5 @@
 TODO:
-- Move to next tile on keypress
-- Selecting words, showing that color in shared squares
+- Figure out shared tiles
 - Enter key functionality, that colors (and flips) each tile
 - On screen Keyboard class linked up to keypress enter and backspace methods
 - Mobile compatibility
