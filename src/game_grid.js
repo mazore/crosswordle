@@ -53,15 +53,15 @@ export default function GameGrid() {
         const stackVertical = [];
 
         const checkTile = (stack, tile) => {
-            if (tile == null) {
+            if (tile != null) {
+                stack.push(tile);
+            } else {
                 if (stack.length > 1) {
                     // If we found a word
                     this.words.push(new Word(this, wordIndex, stack));
                     wordIndex += 1;
                 }
                 stack.length = 0; // Clear stack
-            } else {
-                stack.push(tile);
             }
         };
 
@@ -88,13 +88,13 @@ export default function GameGrid() {
     this.setSelection = (tile) => {
         if (this.selection != null) { // Unselect last
             this.selection.selected = false;
+            this.selection.draw();
         }
         if (tile !== null && typeof tile !== 'undefined') {
             tile.selected = true;
             this.selection = tile;
+            this.selection.draw();
         }
-
-        this.drawAll();
     };
 
     this.mouseDown = (event) => {
@@ -106,8 +106,25 @@ export default function GameGrid() {
 
         this.setSelection(this.tiles[gridY][gridX]);
     };
-
     this.canvas.addEventListener('mousedown', this.mouseDown);
+
+    this.keyPress = (letter) => { // `letter` should be uppercase
+        this.selection.letter = letter;
+        this.selection.draw();
+    };
+    this.deletePressed = () => {
+        this.selection.letter = '';
+        this.selection.draw();
+    };
+
+    this.keydown = (event) => { // Raw event letter
+        if (event.key.match(/^[a-z]$/i)) { // If is letter
+            this.keyPress(event.key.toUpperCase());
+        } else if (event.key === 'Backspace') {
+            this.deletePressed();
+        }
+    };
+    document.addEventListener('keydown', this.keydown);
 
     this.setup();
 }

@@ -1,6 +1,4 @@
 TODO:
-- Keyboard input that passes to methods in GameGrid(?) and modifies current Tile
-    - Including backspace
 - Move to next tile on keypress
 - Selecting words, showing that color in shared squares
 - Enter key functionality, that colors (and flips) each tile
