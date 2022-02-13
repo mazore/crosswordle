@@ -17,11 +17,13 @@ export default function Tile(gameGrid, gridX, gridY, correctLetter) {
         const width = ps.SQUARE_WIDTH - ps.SQUARE_PADDING;
         const left = this.midX - width / 2;
         const top = this.midY - width / 2;
-        const strokeInfo = { width: 2, color: this.words[0].color };
+        let bg = ps.BLANK_TILE_BG;
+        const strokeInfo = { width: 3.5, color: this.words[0].color };
         if (this.selected) {
-            strokeInfo.width = 4;
+            // strokeInfo.width = 5;
+            bg = ps.ACTIVE_TILE_BG;
         }
-        rect(gameGrid.ctx, left, top, width, width, ps.BLANK_TILE_BG, true, strokeInfo);
+        rect(gameGrid.ctx, left, top, width, width, bg, true, strokeInfo);
 
         const fontSize = width / 2 + 3;
         text(gameGrid.ctx, this.letter, this.midX, this.midY, '#2d3436', fontSize, true);

@@ -1,3 +1,8 @@
 TODO:
-- Keyboard input that passes to letterPress backspacePress enterPress in Word
-- On screen Keyboard class with it's own coloring methods
+- Keyboard input that passes to methods in GameGrid(?) and modifies current Tile
+    - Including backspace
+- Move to next tile on keypress
+- Enter key functionality, that colors (and flips) each tile
+- Selecting words, showing that color in shared squares
+- On screen Keyboard class linked up to keypress enter and backspace methods
+- Methods for GameGrid to color keyboard buttons

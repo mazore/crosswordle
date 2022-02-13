@@ -12,19 +12,23 @@ export default function GameGrid() {
     this.words = [];
 
     this.setup = () => {
-        // this.canvas.width = ps.GAMEGRID_WIDTH;
-        // this.canvas.height = ps.GAMEGRID_WIDTH;
-        // this.canvas.style.width = `${ps.GAMEGRID_WIDTH}px`;
-        // this.canvas.style.height = `${ps.GAMEGRID_WIDTH}px`;
+        this.setCanvasDimensions();
+    };
+
+    this.setCanvasDimensions = () => {
+        // Complicated to fix bluriness
         this.canvas.width = ps.GAMEGRID_WIDTH * 2;
         this.canvas.height = ps.GAMEGRID_WIDTH * 2;
         this.canvas.style.width = `${ps.GAMEGRID_WIDTH}px`;
         this.canvas.style.height = `${ps.GAMEGRID_WIDTH}px`;
         this.ctx.scale(2, 2);
         this.ctx.lineCap = 'square';
+        // this.canvas.width = ps.GAMEGRID_WIDTH; // Blurry method
+        // this.canvas.height = ps.GAMEGRID_WIDTH;
     };
 
-    this.loadTilesFromText = (text) => { // `text` is csv
+    /* Takes a csv `text` and creates a grid of Tiles */
+    this.loadTilesFromText = (text) => {
         let gridX = 0;
         let gridY = 0;
         for (const row of text.split('\n')) {
@@ -42,17 +46,19 @@ export default function GameGrid() {
             gridY += 1;
             if (gridY === ps.GRID_WIDTH) break;
         }
-        this.loadWordsFromTiles();
-        this.drawAll();
     };
 
+    /**
+     * Loads many Word objects from the grid of tiles by finding streaks of more than one letter
+     * horizontally or vertically.
+     */
     this.loadWordsFromTiles = () => {
         // Stacks contain Tiles and are used to create new Words once a streak of Letters ends
         let wordIndex = 0;
         const stackHorizontal = [];
         const stackVertical = [];
 
-        const checkLetter = (stack, tile) => {
+        const checkTile = (stack, tile) => {
             if (tile == null) {
                 if (stack.length > 1) {
                     // If we found a word
@@ -68,12 +74,13 @@ export default function GameGrid() {
         for (let i = 0; i < ps.GRID_WIDTH; i += 1) {
             for (let j = 0; j < ps.GRID_WIDTH; j += 1) {
                 // We can check both directions simultaneously because the grid is a square
-                checkLetter(stackHorizontal, this.tiles[i][j]);
-                checkLetter(stackVertical, this.tiles[j][i]);
+                checkTile(stackHorizontal, this.tiles[i][j]);
+                checkTile(stackVertical, this.tiles[j][i]);
             }
         }
     };
 
+    /** Redraws all tiles and background */
     this.drawAll = () => {
         rect(this.ctx, 0, 0, ps.GAMEGRID_WIDTH, ps.GAMEGRID_WIDTH, '#ffffff'); // Background
         for (const row of this.tiles) {
@@ -83,6 +90,7 @@ export default function GameGrid() {
         }
     };
 
+    /** Deselects last tile and selects the new one */
     this.setSelection = (tile) => {
         if (this.selection != null) { // Unselect last
             this.selection.selected = false;

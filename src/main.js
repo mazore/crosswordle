@@ -8,6 +8,8 @@ function Main() {
             .then((response) => response.text())
             .then((text) => {
                 this.gameGrid.loadTilesFromText(text);
+                this.gameGrid.loadWordsFromTiles();
+                this.gameGrid.drawAll();
             });
     };
     this.loadGridFile('hoops');
