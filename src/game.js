@@ -76,6 +76,28 @@ export default function Game() {
         }
     };
 
+    this.setSelection = (gridX, gridY) => {
+        const words = this.wordGrid[gridY][gridX];
+        if (!words || words.length === 0) { // If didn't click on a word
+            this.selectedWord.deselect();
+            this.selectedWord = null;
+            return;
+        }
+
+        const selectedTileBefore = this.selectedWord?.selectedTile;
+        this.selectedWord?.deselect();
+        let wordIndex = 0; // Default to selecting the first word
+        if (selectedBefore.word === words[1]) { // If clicking a selected word
+            wordIndex = 1; // Prefer keeping current word selected
+        }
+        const tileToSelect = words[wordIndex].tileAtPosition(gridX, gridY);
+        if (tileToSelect === selectedTileBefore) {
+            // TODO:
+        }
+        this.selectedWord = words[wordIndex];
+        this.selectedWord.setSelectedTile(tile);
+    };
+
     this.mouseDown = (event) => {
         const canvasRect = this.canvas.getBoundingClientRect();
         const x = event.clientX - canvasRect.left;
@@ -83,18 +105,7 @@ export default function Game() {
         const gridX = Math.floor(x / ps.SQUARE_WIDTH);
         const gridY = Math.floor(y / ps.SQUARE_WIDTH);
 
-        const selectedBefore = this.selectedWord;
-        if (this.selectedWord != null) {
-            this.selectedWord.deselect();
-        }
-        const words = this.wordGrid[gridY][gridX];
-        if (words && words.length > 0) { // If clicked on a word
-            this.selectedWord = words[0];
-            if (selectedBefore === words[1]) {
-                this.selectedWord = words[1]; // Prefer keeping current word selected
-            }
-            this.selectedWord.select(gridX, gridY);
-        }
+        this.setSelection(gridX, gridY);
 
         this.drawAll();
     };

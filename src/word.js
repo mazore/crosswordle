@@ -40,29 +40,16 @@ export default function Word(game, wordIndex, tileInfos) {
         this.selectedTile = tile;
     };
 
-    this.select = (gridX, gridY) => {
-        const tile = this.tileAtPosition(gridX, gridY);
-        console.log(this.selectedTile, tile);
-        if (this.selectedTile === tile && tile.duplicate != null) {
-            // If cliked shared tile that's already selected, switch word direction
-            console.log('asd');
-            this.deselect();
-            tile.duplicate.word.select();
-            return;
-        }
-        this.setSelectedTile(tile);
-    };
-
     this.deselect = () => {
         this.selectedTile.selected = false;
         this.selectedTile = null;
-        game.selectedWord = null;
     };
 
     this.typeLetter = (letter) => {
         this.selectedTile.setLetter(letter);
         if (this.selectedTile.indexInWord === this.wordLength - 1) {
             this.deselect();
+            game.selectedWord = null;
         } else { // If isn't last letter, move to next letter
             const tile = this.tiles[this.selectedTile.indexInWord + 1];
             this.setSelectedTile(tile);
