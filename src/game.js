@@ -63,6 +63,7 @@ export default function Game() {
             for (let j = 0; j < ps.GRID_WIDTH; j += 1) {
                 // We can check both directions simultaneously because the grid is a square
                 checkTile(stackHorizontal, letters[i][j], j, i);
+                console.log(letters, text, i, j);
                 checkTile(stackVertical, letters[j][i], i, j);
             }
         }
