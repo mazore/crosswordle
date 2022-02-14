@@ -42,8 +42,10 @@ export default function Word(game, wordIndex, tileInfos) {
 
     this.select = (gridX, gridY) => {
         const tile = this.tileAtPosition(gridX, gridY);
+        console.log(this.selectedTile, tile);
         if (this.selectedTile === tile && tile.duplicate != null) {
             // If cliked shared tile that's already selected, switch word direction
+            console.log('asd');
             this.deselect();
             tile.duplicate.word.select();
             return;
