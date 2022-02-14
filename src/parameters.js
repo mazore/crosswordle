@@ -11,9 +11,9 @@ function Parameters() {
     this.WORD_COLORS = [
         '#2d3436', // Black
         '#6c5ce7', // Dark purple
-        '#00b894', // Dark green
+        '#d18065', // Orangeville, r-16 gb+16
         '#0984e3', // Dark blue
-        '#d63031', // Dark red
+        '#fd79a8', // Pink
     ];
     this.TILE_STROKE = 3.5;
 }
