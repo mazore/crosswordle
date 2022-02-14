@@ -83,12 +83,16 @@ export default function Game() {
         const gridX = Math.floor(x / ps.SQUARE_WIDTH);
         const gridY = Math.floor(y / ps.SQUARE_WIDTH);
 
+        const selectedBefore = this.selectedWord;
         if (this.selectedWord != null) {
             this.selectedWord.deselect();
         }
         const words = this.wordGrid[gridY][gridX];
         if (words && words.length > 0) { // If clicked on a word
-            [this.selectedWord] = words;
+            this.selectedWord = words[0];
+            if (selectedBefore === words[1]) {
+                this.selectedWord = words[1];
+            }
             this.selectedWord.select(gridX, gridY);
         }
 
