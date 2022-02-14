@@ -39,7 +39,7 @@ export default function Game() {
     };
 
     this.loadWordsFromText = (text) => {
-        const letters = text.split('\r\n').map((row) => row.split(','));
+        const letters = text.split('\n').map((row) => row.split(','));
 
         let wordIndex = 0;
         // Stacks are arrays of letters that are used to find words
@@ -63,7 +63,6 @@ export default function Game() {
             for (let j = 0; j < ps.GRID_WIDTH; j += 1) {
                 // We can check both directions simultaneously because the grid is a square
                 checkTile(stackHorizontal, letters[i][j], j, i);
-                console.log(letters, text, i, j);
                 checkTile(stackVertical, letters[j][i], i, j);
             }
         }
