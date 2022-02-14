@@ -41,7 +41,14 @@ export default function Word(game, wordIndex, tileInfos) {
     };
 
     this.select = (gridX, gridY) => {
-        this.setSelectedTile(this.tileAtPosition(gridX, gridY));
+        const tile = this.tileAtPosition(gridX, gridY);
+        if (this.selectedTile === tile && tile.duplicate != null) {
+            // If cliked shared tile that's already selected, switch word direction
+            this.deselect();
+            tile.duplicate.word.select();
+            return;
+        }
+        this.setSelectedTile(tile);
     };
 
     this.deselect = () => {

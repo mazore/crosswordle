@@ -91,7 +91,7 @@ export default function Game() {
         if (words && words.length > 0) { // If clicked on a word
             this.selectedWord = words[0];
             if (selectedBefore === words[1]) {
-                this.selectedWord = words[1];
+                this.selectedWord = words[1]; // Prefer keeping current word selected
             }
             this.selectedWord.select(gridX, gridY);
         }
