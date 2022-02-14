@@ -87,7 +87,7 @@ export default function Game() {
         const selectedTileBefore = this.selectedWord?.selectedTile;
         this.selectedWord?.deselect();
         let wordIndex = 0; // Default to selecting the first word
-        if (selectedBefore.word === words[1]) { // If clicking a selected word
+        if (this.selectedWord === words[1]) { // If clicking a selected word
             wordIndex = 1; // Prefer keeping current word selected
         }
         const tileToSelect = words[wordIndex].tileAtPosition(gridX, gridY);
