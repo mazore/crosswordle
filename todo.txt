@@ -1,6 +1,4 @@
 TODO:
-- Shared tile selection quirks
-    - Double tap shared tile to switch to second word in wordGrid
 - Backspace moves selection back (only if on blank tile)
 - Enter key functionality, that colors (and flips) each tile
 - On screen Keyboard class linked up to keypress enter and backspace methods

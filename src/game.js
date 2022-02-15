@@ -8,8 +8,11 @@ export default function Game() {
 
     this.words = [];
     this.selectedWord = null;
-    // wordGrid is 2d array of empty arrays that contain what word(s) are at each position
-    this.wordGrid = [...Array(ps.GRID_WIDTH)].map(() => [...Array(ps.GRID_WIDTH)].map(() => []));
+    // wordGrid is 2d array of arrays that contain what word(s) are at each position
+    this.wordGrid = [...Array(ps.GRID_WIDTH)].map(() => {
+        const row = [...Array(ps.GRID_WIDTH)];
+        return row.map(() => []); // Fill with empty arrays
+    });
 
     this.setup = () => {
         this.setCanvasDimensions();
@@ -39,7 +42,10 @@ export default function Game() {
     };
 
     this.loadWordsFromText = (text) => {
-        const letters = text.split('\n').map((row) => row.split(','));
+        const letters = text.split('\n').map((row) => {
+            const cleanRow = row.replace('\r'); // Sometimes causes line ending issues
+            return cleanRow.split(',');
+        });
 
         let wordIndex = 0;
         // Stacks are arrays of letters that are used to find words
@@ -78,37 +84,44 @@ export default function Game() {
 
     this.setSelection = (gridX, gridY) => {
         const words = this.wordGrid[gridY][gridX];
-        
+        const selectedBefore = {
+            word: this.selectedWord,
+            tile: this.selectedWord?.selectedTile,
+        };
+        this.selectedWord?.deselect();
+
         if (!words || words.length === 0) { // If didn't click on a word
-            this.selectedWord.deselect();
             this.selectedWord = null;
             return;
         }
 
-        if (words.length === 1) {
-            this.selectedWord.deselect();
-            this.selectedWord = words[0];
-            const tile = this.selectedWord.tileAtPosition(gridX, gridY);
-            this.selectedWord.selectTile(tile);
+        let wordIndex;
+
+        if (words.length === 1) { // If clicked on a normal tile
+            wordIndex = 0;
         }
 
-        if (words.length === 2) {
-            const selectedBefore = {
-                word: this.selectedWord,
-                tile: this.selectedWord.selectedTile,
+        if (words.length === 2) { // If clicked on a shared tile
+            // Default to the second word because it's drawn on top
+            wordIndex = 1;
+
+            // If one word is already selected, maintain that selection
+            if (words[0] === selectedBefore.word) {
+                wordIndex = 0;
+            } else if (words[1] === selectedBefore.word) {
+                wordIndex = 1;
             }
-            this.selectedWord?.deselect();
-            let wordIndex = 0; // Default to selecting the first word
-            if (this.selectedWord === words[1]) { // If clicking a selected word
-                wordIndex = 1; // Prefer keeping current word selected
+
+            // But if the word's tile is already selected, switch words to toggle direction
+            const tile = words[wordIndex].tileAtPosition(gridX, gridY);
+            if (tile === selectedBefore.tile) {
+                wordIndex = 1 - wordIndex;
             }
-            const tileToSelect = words[wordIndex].tileAtPosition(gridX, gridY);
-            if (tileToSelect === selectedTileBefore) {
-                // TODO:
-            }
-            this.selectedWord = words[wordIndex];
-            this.selectedWord.setSelectedTile(tile);
         }
+
+        this.selectedWord = words[wordIndex];
+        const tile = this.selectedWord.tileAtPosition(gridX, gridY);
+        this.selectedWord.selectTile(tile);
     };
 
     this.mouseDown = (event) => {
