@@ -1,4 +1,5 @@
 import { text, rect } from './helpers/drawing.js';
+import { combineColors } from './helpers/functions.js';
 import ps from './parameters.js';
 
 export default function Tile(word, indexInWord, gridX, gridY, correctLetter) {
@@ -8,7 +9,7 @@ export default function Tile(word, indexInWord, gridX, gridY, correctLetter) {
     this.gridY = gridY;
     this.correctLetter = correctLetter;
 
-    this.letter = correctLetter;
+    this.letter = '';
     this.selected = false;
 
     this.duplicate = null; // Tile that this shares a space with
@@ -35,9 +36,13 @@ export default function Tile(word, indexInWord, gridX, gridY, correctLetter) {
             bg = ps.ACTIVE_TILE_BG;
         }
         const strokeInfo = { width: ps.TILE_STROKE, color: word.color };
-        if (word.isSelected) {
+        if (word.isSelected) { // Stroke is thicker if selected
             strokeInfo.width += 1.5;
         }
+        if (this.duplicate != null) { // Mix colors if it's a duplicate
+            strokeInfo.color = combineColors(word.color, this.duplicate.word.color);
+        }
+
         rect(word.game.ctx, this.left, this.top, this.width, this.width, bg, true, strokeInfo);
 
         const fontSize = this.width / 2 + 3;

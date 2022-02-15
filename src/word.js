@@ -49,7 +49,9 @@ export default function Word(game, wordIndex, tileInfos) {
     };
 
     this.typeLetter = (letter) => {
-        this.selectedTile?.setLetter(letter);
+        if (this.selectedTile == null) return;
+
+        this.selectedTile.setLetter(letter);
         if (this.selectedTile.indexInWord !== this.wordLength - 1) {
             this.selectTile(this.tiles[this.selectedTile.indexInWord + 1]);
         } else { // If it's the end of the word
@@ -68,5 +70,11 @@ export default function Word(game, wordIndex, tileInfos) {
             this.selectTile(this.tiles[this.wordLength - 1]);
         }
         this.selectedTile.setLetter('');
+    };
+
+    this.enterPressed = () => {
+        for (const tile of this.tiles) {
+            console.log(tile.letter === tile.correctLetter);
+        }
     };
 }
