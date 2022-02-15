@@ -32,7 +32,7 @@ export default function Word(game, wordIndex, tileInfos) {
         return null;
     };
 
-    this.setSelectedTile = (tile) => {
+    this.selectTile = (tile) => {
         if (this.isSelected()) {
             this.selectedTile.selected = false;
         }
@@ -52,7 +52,7 @@ export default function Word(game, wordIndex, tileInfos) {
             game.selectedWord = null;
         } else { // If isn't last letter, move to next letter
             const tile = this.tiles[this.selectedTile.indexInWord + 1];
-            this.setSelectedTile(tile);
+            this.selectTile(tile);
         }
     };
 }
