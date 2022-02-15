@@ -47,12 +47,17 @@ export default function Word(game, wordIndex, tileInfos) {
 
     this.typeLetter = (letter) => {
         this.selectedTile.setLetter(letter);
-        if (this.selectedTile.indexInWord === this.wordLength - 1) {
-            this.deselect();
-            game.selectedWord = null;
-        } else { // If isn't last letter, move to next letter
-            const tile = this.tiles[this.selectedTile.indexInWord + 1];
-            this.selectTile(tile);
+        if (this.selectedTile.indexInWord !== this.wordLength - 1) {
+            this.selectTile(this.tiles[this.selectedTile.indexInWord + 1]);
         }
+    };
+
+    this.deletePressed = () => {
+        if (this.selectedTile.letter === '') { // If blank, move back a space
+            if (this.selectedTile.indexInWord !== 0) {
+                this.selectTile(this.tiles[this.selectedTile.indexInWord - 1]);
+            }
+        }
+        this.selectedTile.setLetter('');
     };
 }

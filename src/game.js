@@ -144,7 +144,7 @@ export default function Game() {
     };
     this.deletePressed = () => {
         if (this.selectedWord == null) return;
-        this.selectedWord.selectedTile.setLetter('');
+        this.selectedWord.deletePressed();
         this.drawAll();
     };
 
