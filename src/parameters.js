@@ -18,6 +18,19 @@ function Parameters() {
         'rgb(232, 67, 147)', // Pink
     ];
     this.TILE_STROKE = 3.5;
+
+    this.ENABLE_WORD_COLORS = false;
+    const wordColors = document.getElementById('wordColors');
+    wordColors.oninput = (event) => {
+        this.ENABLE_WORD_COLORS = event.target.checked;
+        window.main.game.drawAll();
+    };
+    this.COLOR_MIXING = false;
+    const colorMixing = document.getElementById('colorMixing');
+    colorMixing.oninput = (event) => {
+        this.COLOR_MIXING = event.target.checked;
+        window.main.game.drawAll();
+    };
 }
 
 export default new Parameters();

@@ -1,5 +1,7 @@
 TODO:
-- Enter key functionality, that colors (and flips) each tile
+- Real rules for repeating letters
+- Check invalid words
+- Cool animations (for checking a word, inputting letters, invalid words)
 - On screen Keyboard class linked up to keypress enter and backspace methods
 - Mobile compatibility
 - Methods for Game to color keyboard buttons

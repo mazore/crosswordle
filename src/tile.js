@@ -1,5 +1,5 @@
 import { text, rect } from './helpers/drawing.js';
-import { lighten } from './helpers/functions.js';
+import { combineColors, lighten } from './helpers/functions.js';
 import ps from './parameters.js';
 
 export default function Tile(word, indexInWord, gridX, gridY, correctLetter) {
@@ -37,13 +37,16 @@ export default function Tile(word, indexInWord, gridX, gridY, correctLetter) {
         if (this.selected) { // TODO
             bg = lighten(bg, -40);
         }
-        const strokeInfo = { width: ps.TILE_STROKE, color: ps.BLACKISH }; // word.color };
+        const strokeInfo = { width: ps.TILE_STROKE, color: ps.BLACKISH };
         if (word.isSelected) { // Stroke is thicker if selected
             strokeInfo.width += 1.5;
         }
-        // if (this.duplicate != null) { // Mix colors if it's a duplicate
-        //     strokeInfo.color = combineColors(word.color, this.duplicate.word.color);
-        // }
+        if (ps.ENABLE_WORD_COLORS) {
+            strokeInfo.color = word.color;
+        }
+        if (ps.COLOR_MIXING && this.duplicate != null) { // Mix colors if it's a duplicate
+            strokeInfo.color = combineColors(word.color, this.duplicate.word.color);
+        }
 
         rect(word.game.ctx, this.left, this.top, this.width, this.width, bg, true, strokeInfo);
 
