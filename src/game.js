@@ -43,7 +43,7 @@ export default function Game() {
 
     this.loadWordsFromText = (text) => {
         const letters = text.split('\n').map((row) => {
-            const cleanRow = row.replace('\r'); // Sometimes causes line ending issues
+            const cleanRow = row.replace('\r', ''); // Sometimes causes line ending issues
             return cleanRow.split(',');
         });
 
