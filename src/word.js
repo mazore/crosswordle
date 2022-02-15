@@ -4,7 +4,7 @@ import ps from './parameters.js';
 export default function Word(game, wordIndex, tileInfos) {
     this.game = game;
     this.color = ps.WORD_COLORS[wordIndex];
-    this.wordLength = tileInfos.length;
+    this.letterList = tileInfos.map((info) => info.letter);
 
     this.tiles = [];
     for (let i = 0; i < tileInfos.length; i += 1) {
@@ -52,7 +52,7 @@ export default function Word(game, wordIndex, tileInfos) {
         if (this.selectedTile == null) return;
 
         this.selectedTile.setLetter(letter);
-        if (this.selectedTile.indexInWord !== this.wordLength - 1) {
+        if (this.selectedTile.indexInWord !== this.tiles.length - 1) {
             this.selectTile(this.tiles[this.selectedTile.indexInWord + 1]);
         } else { // If it's the end of the word
             this.selectedTile.selected = false;
@@ -67,14 +67,14 @@ export default function Word(game, wordIndex, tileInfos) {
             }
         }
         if (this.selectedTile == null) { // If no tile selected
-            this.selectTile(this.tiles[this.wordLength - 1]);
+            this.selectTile(this.tiles[this.tiles.length - 1]);
         }
         this.selectedTile.setLetter('');
     };
 
     this.enterPressed = () => {
         for (const tile of this.tiles) {
-            console.log(tile.letter === tile.correctLetter);
+            tile.checkLetter();
         }
     };
 }

@@ -10,5 +10,14 @@ export function combineColors(color1, color2) {
     const r = (parseInt(r1, 10) + parseInt(r2, 10)) / 2;
     const g = (parseInt(g1, 10) + parseInt(g2, 10)) / 2;
     const b = (parseInt(b1, 10) + parseInt(b2, 10)) / 2;
-    return `rgb(${r}, ${g}, ${b})`;
+    return `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
+}
+
+/** Changes rgb values of `color` each by `change`, can be negative to darken */
+export function lighten(color, change) {
+    let [r, g, b] = getRGB(color);
+    r = parseInt(r, 10) + change;
+    g = parseInt(g, 10) + change;
+    b = parseInt(b, 10) + change;
+    return `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
 }

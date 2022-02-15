@@ -137,23 +137,20 @@ export default function Game() {
     };
     this.canvas.addEventListener('mousedown', this.mouseDown);
 
-    this.keyPress = (letter) => { // `letter` should always be uppercase
-        if (this.selectedWord == null) return;
-        this.selectedWord.typeLetter(letter);
-        this.drawAll();
-    };
-    this.deletePressed = () => {
-        if (this.selectedWord == null) return;
-        this.selectedWord.deletePressed();
-        this.drawAll();
-    };
-
     document.addEventListener('keydown', (event) => {
+        if (this.selectedWord == null) return;
+
         if (event.key.match(/^[a-z]$/i)) { // If is letter
-            this.keyPress(event.key.toUpperCase());
+            this.selectedWord.typeLetter(event.key.toUpperCase());
         } else if (event.key === 'Backspace') {
-            this.deletePressed();
+            this.selectedWord.deletePressed();
+        } else if (event.key === 'Enter') {
+            this.selectedWord.enterPressed();
+        } else {
+            return; // Don't need to draw all again
         }
+
+        this.drawAll();
     });
 
     this.setup();

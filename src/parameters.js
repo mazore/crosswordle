@@ -5,9 +5,11 @@ function Parameters() {
 
     this.SQUARE_WIDTH = this.GAME_WIDTH / this.GRID_WIDTH;
 
-    this.BLACK = '#2d3436';
-    this.BLANK_TILE_BG = '#dfe6e9';
-    this.ACTIVE_TILE_BG = '#b2bec3';
+    this.BLACKISH = 'rgb(45, 52, 54)';
+    this.BLANK_TILE_BG = 'rgb(223, 230, 233)';
+    this.WRONG = 'rgb(119, 124, 125)';
+    this.WRONG_SPOT = 'rgb(201, 181, 86)';
+    this.CORRECT = 'rgb(106, 170, 101)';
     this.WORD_COLORS = [
         'rgb(45, 52, 54)', // Black
         'rgb(108, 92, 231)', // Dark purple

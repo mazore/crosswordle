@@ -1,5 +1,5 @@
 import { text, rect } from './helpers/drawing.js';
-import { combineColors } from './helpers/functions.js';
+import { lighten } from './helpers/functions.js';
 import ps from './parameters.js';
 
 export default function Tile(word, indexInWord, gridX, gridY, correctLetter) {
@@ -25,34 +25,50 @@ export default function Tile(word, indexInWord, gridX, gridY, correctLetter) {
     this.width = ps.SQUARE_WIDTH - ps.SQUARE_PADDING;
     this.left = this.midX - this.width / 2;
     this.top = this.midY - this.width / 2;
+    this.bg = ps.BLANK_TILE_BG;
+    this.fg = ps.BLACKISH;
 
     this.draw = () => {
         if (this.duplicate != null && this.duplicate.word.isSelected) {
             return; // Don't draw if duplicate is selected
         }
 
-        let bg = ps.BLANK_TILE_BG;
-        if (this.selected) {
-            bg = ps.ACTIVE_TILE_BG;
+        let { bg } = this;
+        if (this.selected) { // TODO
+            bg = lighten(bg, -40);
         }
-        const strokeInfo = { width: ps.TILE_STROKE, color: word.color };
+        const strokeInfo = { width: ps.TILE_STROKE, color: ps.BLACKISH }; // word.color };
         if (word.isSelected) { // Stroke is thicker if selected
             strokeInfo.width += 1.5;
         }
-        if (this.duplicate != null) { // Mix colors if it's a duplicate
-            strokeInfo.color = combineColors(word.color, this.duplicate.word.color);
-        }
+        // if (this.duplicate != null) { // Mix colors if it's a duplicate
+        //     strokeInfo.color = combineColors(word.color, this.duplicate.word.color);
+        // }
 
         rect(word.game.ctx, this.left, this.top, this.width, this.width, bg, true, strokeInfo);
 
         const fontSize = this.width / 2 + 3;
-        text(word.game.ctx, this.letter, this.midX, this.midY, ps.BLACK, fontSize, true);
+        text(word.game.ctx, this.letter, this.midX, this.midY, this.fg, fontSize, true);
     };
 
     this.setLetter = (letter) => {
         this.letter = letter;
         if (this.duplicate) {
             this.duplicate.letter = letter;
+        }
+    };
+
+    this.checkLetter = (recursed) => {
+        if (this.letter === this.correctLetter) {
+            this.bg = ps.CORRECT;
+        } else if (word.letterList.includes(this.letter)) {
+            this.bg = ps.WRONG_SPOT;
+        } else {
+            this.bg = ps.WRONG;
+        }
+        this.fg = '#ffffff';
+        if (this.duplicate != null && !recursed) {
+            this.duplicate.checkLetter(true);
         }
     };
 }
