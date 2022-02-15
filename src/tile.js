@@ -26,7 +26,7 @@ export default function Tile(word, indexInWord, gridX, gridY, correctLetter) {
     this.top = this.midY - this.width / 2;
 
     this.draw = () => {
-        if (this.duplicate != null && this.duplicate.word.isSelected()) {
+        if (this.duplicate != null && this.duplicate.word.isSelected) {
             return; // Don't draw if duplicate is selected
         }
 
@@ -35,7 +35,7 @@ export default function Tile(word, indexInWord, gridX, gridY, correctLetter) {
             bg = ps.ACTIVE_TILE_BG;
         }
         const strokeInfo = { width: ps.TILE_STROKE, color: word.color };
-        if (word.isSelected()) {
+        if (word.isSelected) {
             strokeInfo.width += 1.5;
         }
         rect(word.game.ctx, this.left, this.top, this.width, this.width, bg, true, strokeInfo);

@@ -13,9 +13,8 @@ export default function Word(game, wordIndex, tileInfos) {
         game.wordGrid[gridY][gridX].push(this);
     }
 
-    this.selectedTile = null; // Is null when this Word isn't selected
-
-    this.isSelected = () => this.selectedTile != null;
+    this.isSelected = false;
+    this.selectedTile = null;
 
     this.draw = () => {
         for (let i = 0; i < this.tiles.length; i += 1) {
@@ -33,30 +32,40 @@ export default function Word(game, wordIndex, tileInfos) {
     };
 
     this.selectTile = (tile) => {
-        if (this.isSelected()) {
+        if (this.selectedTile != null) {
             this.selectedTile.selected = false;
         }
         tile.selected = true;
         this.selectedTile = tile;
+        this.isSelected = true;
     };
 
     this.deselect = () => {
-        this.selectedTile.selected = false;
-        this.selectedTile = null;
+        if (this.selectedTile != null) {
+            this.selectedTile.selected = false;
+            this.selectedTile = null;
+        }
+        this.isSelected = false;
     };
 
     this.typeLetter = (letter) => {
-        this.selectedTile.setLetter(letter);
+        this.selectedTile?.setLetter(letter);
         if (this.selectedTile.indexInWord !== this.wordLength - 1) {
             this.selectTile(this.tiles[this.selectedTile.indexInWord + 1]);
+        } else { // If it's the end of the word
+            this.selectedTile.selected = false;
+            this.selectedTile = null;
         }
     };
 
     this.deletePressed = () => {
-        if (this.selectedTile.letter === '') { // If blank, move back a space
+        if (this.selectedTile?.letter === '') { // If blank, move back a space
             if (this.selectedTile.indexInWord !== 0) {
                 this.selectTile(this.tiles[this.selectedTile.indexInWord - 1]);
             }
+        }
+        if (this.selectedTile == null) { // If no tile selected
+            this.selectTile(this.tiles[this.wordLength - 1]);
         }
         this.selectedTile.setLetter('');
     };
