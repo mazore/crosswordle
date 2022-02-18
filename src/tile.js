@@ -25,7 +25,7 @@ export default function Tile(word, indexInWord, gridX, gridY, correctLetter) {
     this.width = ps.SQUARE_WIDTH - ps.SQUARE_PADDING;
     this.left = this.midX - this.width / 2;
     this.top = this.midY - this.width / 2;
-    this.bg = ps.BLANK_TILE_BG;
+    this.bg = ps.LIGHT_GRAY;
     this.fg = ps.BLACKISH;
 
     this.draw = () => {

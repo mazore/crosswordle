@@ -1,3 +1,4 @@
+import Keyboard from './keyboard.js';
 import Tile from './tile.js';
 import ps from './parameters.js';
 
@@ -15,6 +16,7 @@ export default function Word(game, wordIndex, tileInfos) {
 
     this.isSelected = false;
     this.selectedTile = null;
+    this.keyboard = new Keyboard(this);
 
     this.draw = () => {
         for (let i = 0; i < this.tiles.length; i += 1) {
@@ -38,6 +40,8 @@ export default function Word(game, wordIndex, tileInfos) {
         tile.selected = true;
         this.selectedTile = tile;
         this.isSelected = true;
+
+        this.keyboard.show();
     };
 
     this.deselect = () => {
@@ -46,6 +50,8 @@ export default function Word(game, wordIndex, tileInfos) {
             this.selectedTile = null;
         }
         this.isSelected = false;
+
+        this.keyboard.hide();
     };
 
     this.typeLetter = (letter) => {

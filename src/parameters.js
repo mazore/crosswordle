@@ -6,7 +6,7 @@ function Parameters() {
     this.SQUARE_WIDTH = this.GAME_WIDTH / this.GRID_WIDTH;
 
     this.BLACKISH = 'rgb(45, 52, 54)';
-    this.BLANK_TILE_BG = 'rgb(223, 230, 233)';
+    this.LIGHT_GRAY = 'rgb(223, 230, 233)';
     this.WRONG = 'rgb(119, 124, 125)';
     this.WRONG_SPOT = 'rgb(201, 181, 86)';
     this.CORRECT = 'rgb(106, 170, 101)';

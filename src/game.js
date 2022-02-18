@@ -80,6 +80,9 @@ export default function Game() {
         for (const word of this.words) {
             word.draw();
         }
+        for (const word of this.words) {
+            word.keyboard.draw();
+        }
     };
 
     this.setSelection = (gridX, gridY) => {

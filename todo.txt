@@ -1,4 +1,5 @@
 TODO:
+- Pop-up keyboard
 - Real rules for repeating letters
 - Check invalid words
 - Cool animations (for checking a word, inputting letters, invalid words)
